@@ -34,7 +34,7 @@ const carouselData = [
 ];
 
 export default function Home() {
-  const { updateLocation } = useLocationUpdater(); //현재 위치 가져와서 업데이트하기
+  // const { updateLocation } = useLocationUpdater(); //현재 위치 가져와서 업데이트하기
   const [popularPosts, setPopularPosts] = useState<PostCardProps[]>([]);
   const [latestPosts, setLatestPosts] = useState<PostCardProps[]>([]);
   const userStore = useUserStore();
@@ -75,8 +75,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-
-
+/* 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -103,8 +102,8 @@ export default function Home() {
 
     fetchUserInfo();
   }, []);
-
-  return (
+*/ 
+return (
     <div className="min-h-screen">
 
       {/* 메인 컨테이너 */}

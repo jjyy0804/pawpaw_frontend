@@ -1,13 +1,16 @@
 "use client";
 
-import Input from "@/components/Input";
-import { useForm, SubmitHandler } from "react-hook-form";
-import Link from "next/link";
 import Button from "@/components/Button";
+import Input from "@/components/Input";
 import { PATHS } from "@/constants/path";
+import { useLocationUpdater } from "@/hooks/useLocationUpdater";
 import { loginAPI } from "@/lib/api/auth";
-import { useRouter } from "next/navigation";
+import { getMyPage } from "@/lib/api/user";
+import { useUserStore } from "@/stores/userStore";
 import { errorToast, successToast } from "@/utils/toast";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { IoSearchOutline } from "react-icons/io5";
 import KakaoLogin from "./KakaoLogin";
 
@@ -36,6 +39,19 @@ export default function LoginForm() {
     try {
       const response = await loginAPI(payload);
       if (response.status === 200) {
+        const myInfo = await getMyPage();
+        const userStore = useUserStore();
+        userStore.login(myInfo);
+
+        if (myInfo.canWalkingMate) {
+          try {
+            const {updateLocation} = useLocationUpdater();
+            await updateLocation(); // 서버에 위치 업데이트
+          } catch {
+            console.error("위치 업데이트 중 오류가 발생했습니다.");
+          }
+        }
+
         router.push(PATHS.MAIN);
         successToast("로그인 성공했습니다.");
       }
