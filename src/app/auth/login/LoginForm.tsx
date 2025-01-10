@@ -29,6 +29,8 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
+  const userStore = useUserStore();
+  const { updateLocation } = useLocationUpdater();
 
 
   {/**일반 로그인 */ }
@@ -41,13 +43,16 @@ export default function LoginForm() {
       console.log('response', response);
       if (response.status === 200) {
         const { id, nickname, canWalkingMate, imageUrl } = await getMyPage();
-        
-        const userStore = useUserStore();
+        console.log('myInfo => ');
+        console.log(id);
+        console.log(nickname);
+        console.log(canWalkingMate);
+        console.log(imageUrl);
+        console.log('myInfo ========= ');
         userStore.login({ id, nickname, canWalkingMate, imageUrl });
 
         if (canWalkingMate) {
           try {
-            const {updateLocation} = useLocationUpdater();
             await updateLocation(); // 서버에 위치 업데이트
           } catch {
             console.error("위치 업데이트 중 오류가 발생했습니다.");

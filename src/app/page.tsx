@@ -37,7 +37,7 @@ export default function Home() {
   // const { updateLocation } = useLocationUpdater(); //현재 위치 가져와서 업데이트하기
   const [popularPosts, setPopularPosts] = useState<PostCardProps[]>([]);
   const [latestPosts, setLatestPosts] = useState<PostCardProps[]>([]);
-  const userStore = useUserStore();
+  // const userStore = useUserStore();
 
   useEffect(() => {
     const fetchData = async () => {
