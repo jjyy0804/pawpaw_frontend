@@ -38,8 +38,10 @@ export default function LoginForm() {
 
     try {
       const response = await loginAPI(payload);
+      console.log('response', response);
       if (response.status === 200) {
         const myInfo = await getMyPage();
+        console.log('myInfo', myInfo)
         const userStore = useUserStore();
         userStore.login(myInfo);
 
