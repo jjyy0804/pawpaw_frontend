@@ -42,7 +42,17 @@ export default function MyPage() {
   const router = useRouter();
 
   // UserStore에서 ID 가져오기
-  const { id: userId, isLoggedIn } = useUserStore();
+  const userStore = useUserStore();
+  console.log('after userStore.initialize() ==>', userStore)
+  userStore.initialize();
+  console.log('before userStore.initialize() ==>', userStore)
+  
+  const userId = userStore.id;
+  const isLoggedIn = userStore.isLoggedIn;
+
+  console.log('userStore prop', userId, isLoggedIn)
+  // const { initialize, id: userId, isLoggedIn } = useUserStore();
+  // const {userId, isLoggedIn} = initialize();
   // 초기화 및 유저 ID 가져오기
   // useEffect(() => {
   //   initialize();
