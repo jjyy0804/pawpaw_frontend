@@ -40,12 +40,12 @@ export default function LoginForm() {
       const response = await loginAPI(payload);
       console.log('response', response);
       if (response.status === 200) {
-        const myInfo = await getMyPage();
-        console.log('myInfo', myInfo)
+        const { id, nickname, canWalkingMate, imageUrl } = await getMyPage();
+        
         const userStore = useUserStore();
-        userStore.login(myInfo);
+        userStore.login({ id, nickname, canWalkingMate, imageUrl });
 
-        if (myInfo.canWalkingMate) {
+        if (canWalkingMate) {
           try {
             const {updateLocation} = useLocationUpdater();
             await updateLocation(); // 서버에 위치 업데이트
