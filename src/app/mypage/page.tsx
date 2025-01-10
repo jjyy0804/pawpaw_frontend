@@ -42,11 +42,11 @@ export default function MyPage() {
   const router = useRouter();
 
   // UserStore에서 ID 가져오기
-  const { initialize, id: userId, isLoggedIn } = useUserStore();
+  const { id: userId, isLoggedIn } = useUserStore();
   // 초기화 및 유저 ID 가져오기
-  useEffect(() => {
-    initialize();
-  }, []);
+  // useEffect(() => {
+  //   initialize();
+  // }, []);
 
   // (유저정보, 펫정보) 정보 조회 (getMyPage)
   useEffect(() => {
