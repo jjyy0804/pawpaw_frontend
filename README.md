@@ -30,7 +30,7 @@ $ npm start
 <br/>
 
 # 3. 사용자 플로우
-<img src="https://github.com/user-attachments/assets/90e54b53-d0fd-4447-a786-916211aabcc2" alt="user-flow"  width="100%"/>
+<img src="https://github.com/user-attachments/assets/8451ad47-777b-4db8-90af-60b37110f3ef" alt="user-flow"  width="100%"/>
 
 <br/>
 <br/>
