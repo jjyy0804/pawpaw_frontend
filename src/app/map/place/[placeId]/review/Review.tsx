@@ -1,4 +1,4 @@
-import { RiThumbUpFill } from "react-icons/ri";
+import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 import DefaultProfileImage from "@/assets/icons/profile_icon.png";
 import Image from "next/image";
 interface ReviewProps {
@@ -38,10 +38,10 @@ export default function Review({ review }: { review: ReviewProps }) {
         </p>
       </div>
       <div className="flex items-end">
-        {review.isLikeClicked && (
-          <div className="flex-shrink-0">
-            <RiThumbUpFill className="w-4 h-4 text-primary" />
-          </div>
+        {review.isLikeClicked ? (
+          <RiThumbUpFill className="w-4 h-4 text-primary" aria-label="추천됨" />
+        ) : (
+          <RiThumbUpLine className="w-4 h-4 text-primary" aria-label="추천안됨" />
         )}
       </div>
     </div>
