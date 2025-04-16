@@ -38,6 +38,7 @@ export default function ReviewForm({ initialValues, onSubmit }: ReviewFormProps)
         {...register("title", { required: "제목은 필수 입력 항목입니다." })}
         label="제목"
         className="w-full"
+        placeholder="제목"
       />
       <label className="block text-md font-bold text-gray-700 mt-2">내용</label>
       <textarea
