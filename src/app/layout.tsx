@@ -1,5 +1,3 @@
-"use client";
-
 import QueryProvider from "./QueryProvider";
 import Nav from "@/components/Nav/Nav";
 import type { Metadata } from "next";
