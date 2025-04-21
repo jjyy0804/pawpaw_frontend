@@ -85,6 +85,7 @@ const Carousel = ({
               src={item.imgUrl}
               alt="Carousel Image"
               fill
+              priority
               className={`${imageClassName || "object-fill"} max-h-full max-w-full`}
             />
             <div className="absolute inset-0 flex top-[20%] left-[14%] xs:left-[10%] text-black text-2xl xs:text-3xl font-medium whitespace-pre-line">
@@ -120,9 +121,8 @@ const Carousel = ({
           {carouselData.map((_, index) => (
             <div
               key={index}
-              className={`w-2 h-2 rounded-full ${
-                currentIndex === index ? "bg-white" : "bg-gray-400"
-              }`}
+              className={`w-2 h-2 rounded-full ${currentIndex === index ? "bg-white" : "bg-gray-400"
+                }`}
             />
           ))}
         </div>
