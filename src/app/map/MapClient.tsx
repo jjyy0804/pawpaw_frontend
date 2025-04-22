@@ -67,7 +67,6 @@ export default function MapClient() {
     loadPlaces();
   }, [radius, category, location]);
 
-  useEffect(() => { if (!places) return; if (places.length > 0) { loadKakaoMap(); } }, [places]);
 
   if (error) {
     return (
@@ -102,7 +101,7 @@ export default function MapClient() {
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
       // 내 위치 마커 이미지 설정
       const myLocationMarkerImage = new window.kakao.maps.MarkerImage(
-        "/images/mapMaker/my_location.png",
+        "/images/mapMaker/my_location.webp",
         new window.kakao.maps.Size(101, 68),
         { offset: new window.kakao.maps.Point(25, 34) }
       );
@@ -122,19 +121,19 @@ export default function MapClient() {
       }
       // 카테고리에 따른 마커 이미지 매핑
       const markerImages: Record<string, string> = {
-        "동물약국": "/images/mapMaker/animal_pharmacy.png",
-        "미술관": "/images/mapMaker/art_gallery.png",
-        "카페": "/images/mapMaker/cafe.png",
-        "동물병원": "/images/mapMaker/animal_hospital.png",
-        "반려동물용품": "/images/mapMaker/pet_supplies.png",
-        "미용": "/images/mapMaker/beauty.png",
-        "문예회관": "/images/mapMaker/cultural_center.png",
-        "펜션": "/images/mapMaker/pension.png",
-        "식당": "/images/mapMaker/restaurant.png",
-        "여행지": "/images/mapMaker/travel_destination.png",
-        "위탁관리": "/images/mapMaker/management.png",
-        "박물관": "/images/mapMaker/museum.png",
-        "호텔": "/images/mapMaker/hotel.png",
+        "동물약국": "/images/mapMaker/animal_pharmacy.webp",
+        "미술관": "/images/mapMaker/art_gallery.webp",
+        "카페": "/images/mapMaker/cafe.webp",
+        "동물병원": "/images/mapMaker/animal_hospital.webp",
+        "반려동물용품": "/images/mapMaker/pet_supplies.webp",
+        "미용": "/images/mapMaker/beauty.webp",
+        "문예회관": "/images/mapMaker/cultural_center.webp",
+        "펜션": "/images/mapMaker/pension.webp",
+        "식당": "/images/mapMaker/restaurant.webp",
+        "여행지": "/images/mapMaker/travel_destination.webp",
+        "위탁관리": "/images/mapMaker/management.webp",
+        "박물관": "/images/mapMaker/museum.webp",
+        "호텔": "/images/mapMaker/hotel.webp",
       };
 
 
