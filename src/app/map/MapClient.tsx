@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useModalStore } from "@/stores/modalStore";
 import Script from "next/script";
 import Image from "next/image";
@@ -12,6 +12,7 @@ import Loading from "../loading";
 import { fetchNearbyPlaces } from "@/lib/api/place";
 import PlaceDetail from "./place/[placeId]/PlaceDetail";
 import { IoIosWarning } from "react-icons/io";
+
 export interface PlaceProps {
   id: number;
   name: string;
@@ -43,6 +44,23 @@ export default function MapClient() {
   const [radius, setRadius] = useState(250); // 기본 반경 250m
   const [category, setCategory] = useState(""); // 기본 카테고리
 
+  // 카테고리에 따른 마커 이미지 매핑
+  const markerImages = useMemo(() => ({
+    "동물약국": "/images/mapMaker/animal_pharmacy.webp",
+    "미술관": "/images/mapMaker/art_gallery.webp",
+    "카페": "/images/mapMaker/cafe.webp",
+    "동물병원": "/images/mapMaker/animal_hospital.webp",
+    "반려동물용품": "/images/mapMaker/pet_supplies.webp",
+    "미용": "/images/mapMaker/beauty.webp",
+    "문예회관": "/images/mapMaker/cultural_center.webp",
+    "펜션": "/images/mapMaker/pension.webp",
+    "식당": "/images/mapMaker/restaurant.webp",
+    "여행지": "/images/mapMaker/travel_destination.webp",
+    "위탁관리": "/images/mapMaker/management.webp",
+    "박물관": "/images/mapMaker/museum.webp",
+    "호텔": "/images/mapMaker/hotel.webp",
+  }), []);
+
   useEffect(() => {
     async function loadPlaces() {
       try {
@@ -68,6 +86,52 @@ export default function MapClient() {
   }, [radius, category, location]);
 
 
+  useEffect(() => {
+    if (!location || places.length === 0) return;
+
+    window.kakao.maps.load(() => {
+      const mapContainer = document.getElementById("map");
+      if (!mapContainer) return;
+
+      const map = new window.kakao.maps.Map(mapContainer, {
+        center: new window.kakao.maps.LatLng(location.latitude, location.longitude),
+        level: 3,
+      });
+
+      const myLocationMarkerImage = new window.kakao.maps.MarkerImage(
+        "/images/mapMaker/my_location.webp",
+        new window.kakao.maps.Size(101, 68),
+        { offset: new window.kakao.maps.Point(25, 34) }
+      );
+
+      const myLocationMarker = new window.kakao.maps.Marker({
+        position: new window.kakao.maps.LatLng(location.latitude, location.longitude),
+        image: myLocationMarkerImage,
+        title: `현재 위치`,
+      });
+      myLocationMarker.setMap(map);
+
+      places.forEach((place) => {
+        const markerImage = new window.kakao.maps.MarkerImage(
+          markerImages[place.category as keyof typeof markerImages],
+          new window.kakao.maps.Size(35, 53),
+          { offset: new window.kakao.maps.Point(16, 32) }
+        );
+
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(place.latitude, place.longitude),
+          image: markerImage,
+        });
+
+        marker.setMap(map);
+
+        window.kakao.maps.event.addListener(marker, "click", () => {
+          openModal(<PlaceDetail placeId={place.id} />);
+        });
+      });
+    });
+  }, [location, places, markerImages, openModal]);
+
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-screen gap-4">
@@ -92,6 +156,10 @@ export default function MapClient() {
   }
 
   const loadKakaoMap = () => {
+    if (!window.kakao || !window.kakao.maps) {
+      console.warn("Kakao Map is not yet loaded");
+      return;
+    }
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
       const mapOption = {
@@ -119,22 +187,6 @@ export default function MapClient() {
       if (!places || places.length === 0) {
         return; // 장소가 없으면 내 위치 마커만 추가하고 종료
       }
-      // 카테고리에 따른 마커 이미지 매핑
-      const markerImages: Record<string, string> = {
-        "동물약국": "/images/mapMaker/animal_pharmacy.webp",
-        "미술관": "/images/mapMaker/art_gallery.webp",
-        "카페": "/images/mapMaker/cafe.webp",
-        "동물병원": "/images/mapMaker/animal_hospital.webp",
-        "반려동물용품": "/images/mapMaker/pet_supplies.webp",
-        "미용": "/images/mapMaker/beauty.webp",
-        "문예회관": "/images/mapMaker/cultural_center.webp",
-        "펜션": "/images/mapMaker/pension.webp",
-        "식당": "/images/mapMaker/restaurant.webp",
-        "여행지": "/images/mapMaker/travel_destination.webp",
-        "위탁관리": "/images/mapMaker/management.webp",
-        "박물관": "/images/mapMaker/museum.webp",
-        "호텔": "/images/mapMaker/hotel.webp",
-      };
 
 
       // 마커 생성
@@ -142,7 +194,7 @@ export default function MapClient() {
         const markerPosition = new window.kakao.maps.LatLng(place.latitude, place.longitude);
 
         const markerImage = new window.kakao.maps.MarkerImage(
-          markerImages[place.category],
+          markerImages[place.category as keyof typeof markerImages],
           new window.kakao.maps.Size(35, 53),
           { offset: new window.kakao.maps.Point(16, 32) }
         );
