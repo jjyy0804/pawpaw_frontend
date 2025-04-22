@@ -6,8 +6,10 @@ import "./globals.css";
 import Loading from "./loading";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
-import dynamic from "next/dynamic";
-import type { ToastContainerProps } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import SocketProvider from "./SocketProvider";
+import ErrorHandler from "./ErrorHandler";
+import Modal from "@/components/Modal";
 
 
 export const metadata: Metadata = {
@@ -17,20 +19,7 @@ export const metadata: Metadata = {
     "다양한 카테고리별 커뮤니티, 위치기반 반려 동물 동반 장소 추천, 내 주변 산책메이트 찾기, 실시간 채팅",
 };
 
-const Modal = dynamic(() => import("@/components/Modal"), { ssr: false });
 
-const ToastContainer = dynamic<ToastContainerProps>(
-  () => import("react-toastify").then((mod) => mod.ToastContainer),
-  { ssr: false }
-);
-
-const SocketProvider = dynamic(() => import("./SocketProvider"), {
-  ssr: false,
-});
-
-const ErrorHandler = dynamic(() => import("./ErrorHandler"), {
-  ssr: false,
-});
 
 export default function RootLayout({
   children,
