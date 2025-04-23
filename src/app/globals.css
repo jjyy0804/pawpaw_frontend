@@ -20,11 +20,6 @@ select:focus {
   outline: none;
 }
 
-button {
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
 ol,
 ul {
   list-style: none;

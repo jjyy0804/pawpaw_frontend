@@ -5,6 +5,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/stories/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -26,7 +27,7 @@ const config: Config = {
         strong_gray: "#686868",
       },
       boxShadow: {
-        'top-sm': '0px -2px 8px rgba(0, 0, 0, 0.1)',
+        "top-sm": "0px -2px 8px rgba(0, 0, 0, 0.1)",
       },
     },
   },

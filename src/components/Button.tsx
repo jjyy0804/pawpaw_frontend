@@ -22,9 +22,9 @@ export default function Button({
   return (
     <button
       type={btnType || "button"}
-      className={`bg-primary hover:bg-hover transition-colors text-white rounded-md font-bold text-xl 
+      className={`bg-[#FDA002] hover:bg-hover transition-colors text-white rounded-md font-bold text-xl 
         ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : ''} 
-        ${containerStyles}`}
+        ${containerStyles} `}
       disabled={disabled || isLoading}
       onClick={onClick}
       {...props}
